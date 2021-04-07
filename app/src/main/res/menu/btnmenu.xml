@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/goal"
+        android:title="Goal"
+        android:icon="@drawable/goal"></item>
+    <item android:id="@+id/in_ex"
+        android:title="manager"
+        android:icon="@drawable/in_ex_note"></item>
+    <item android:id="@+id/user"
+        android:title="User"
+        android:icon="@drawable/user"></item>
+</menu>

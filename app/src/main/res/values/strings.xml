@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">saveTung</string>
+    <string name="signup"><u>sign up</u></string>
+
+    <string-array name="category_income">
+        <item>-</item>
+        <item>เงินเดือน</item>
+        <item>พ่อแม่ให้</item>
+        <item>ทำงานพาร์ทไทม์</item>
+    </string-array>
+
+    <string-array name="category_expense">
+        <item>-</item>
+        <item>ค่าบิล</item>
+        <item>ค่าอาหาร/เครื่องดื่ม</item>
+        <item>ค่าผ่อนเครื่องใช้</item>
+        <item>ค่าสกินแคร์</item>
+        <item>ค่าซื้อของอื่นๆ</item>
+    </string-array>
+</resources>
