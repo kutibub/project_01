@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Income_detail_class extends Activity {
+public class Income_detail_class extends Activity  {
     //Database
     private FirebaseAuth IAuth;
     private DatabaseReference IIncomeDatabase;
@@ -47,19 +48,21 @@ public class Income_detail_class extends Activity {
         String uid = InUser.getUid();
         IIncomeDatabase = FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
         income_total = findViewById(R.id.total_amount);
-        recyclerView = findViewById(R.id.recycler_income);
+        recyclerView = findViewById(R.id.recycler_id_income);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
+
         layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+
         IIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int totalvalue = 0;
+                int totalvalue =0;
                 for (DataSnapshot mysnapshot : snapshot.getChildren()) {
                     Data data = mysnapshot.getValue(Data.class);
-                    totalvalue += data.getAmount();
+                    totalvalue += totalvalue+data.getAmount();
                     String stTotal = String.valueOf(totalvalue);
                     income_total.setText(stTotal);
                 }
@@ -88,31 +91,32 @@ public class Income_detail_class extends Activity {
     @Override
     public void onStart() {
         super.onStart();
-            ////ส่วนที่มีปัญหา
-            FirebaseRecyclerOptions<Data> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Data>()
-                    .setQuery(IIncomeDatabase, Data.class)
-                    .build();
+        ////ส่วนที่มีปัญหา
+//        FirebaseRecyclerOptions<Data> options=
+//                new FirebaseRecyclerOptions.Builder<Data>()
+//                        .setQuery(IIncomeDatabase,Data.class)
+//                        .setLifecycleOwner((LifecycleOwner) this)
+//                        .build();
+//
+//        adapter = new FirebaseRecyclerAdapter<Data, com.example.project_01.MyViewHolder>(options) {
+//
+//            public com.example.project_01.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//                return new com.example.project_01.MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.income_data, parent, false));
+//            }
+//
+//            protected void onBindViewHolder(com.example.project_01.MyViewHolder holder, int position, @NonNull Data model) {
+//                holder.setAmount(model.getAmount());
+//                holder.setType(model.getType());
+//                holder.setDes(model.getDescription());
+//                holder.setDate(model.getDate());
+//            }
+//        };
+//        recyclerView.setAdapter(adapter);
+//
+//    }
+}
 
-            FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder> (firebaseRecyclerOptions) {
-                @Override
-                public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                    return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.income_data, parent, false));
-                }
-                @NonNull
-                @Override
-                protected void onBindViewHolder(MyViewHolder holder, int position, @NonNull Data model) {
-
-                    holder.setType(model.getType());
-                    holder.setDes(model.getDescription());
-                    holder.setDate(model.getDate());
-                    holder.setAmount(model.getAmount());
-
-                }
-            };
-        recyclerView.setAdapter(adapter);
-        }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
@@ -121,29 +125,29 @@ public class Income_detail_class extends Activity {
             mView = itemView;
         }
 
-        private void setType(String type) {
-            TextView mType = mView.findViewById(R.id.type_income_txt);
-            mType.setText(type);
-
-        }
-
-        private void setDes(String description) {
-            TextView mDes = mView.findViewById(R.id.des_income_txt);
-            mDes.setText(description);
-        }
-
-        private void setDate(String date) {
+        void setDate(String date) {
             TextView mDate = mView.findViewById(R.id.date_income_txt);
             mDate.setText(date);
         }
 
-        private void setAmount(int amount) {
-            TextView mAmount = mView.findViewById(R.id.amount_income_txt);
-            String stamount = String.valueOf(amount);
-            mAmount.setText(stamount);
+        void setType(String type) {
+            TextView mType = mView.findViewById(R.id.type_income_txt);
+            mType.setText(type);
         }
-    }
-}
+
+        void setDes(String des) {
+            TextView mDes = mView.findViewById(R.id.des_income_txt);
+            mDes.setText(des);
+        }
+
+        void setAmount(int amount) {
+            TextView mAmmount = mView.findViewById(R.id.amount_income_txt);
+            String stramount = String.valueOf(amount);
+            mAmmount.setText(stramount);
+
+        }
+    }}
+
 
 
 

@@ -88,6 +88,7 @@ public class Login_class extends Activity {
                 intent = new Intent(getApplicationContext(),Register_class.class);
                 startActivity(intent);
                 Login_class.this.finish();
+
             }
         });
     }

@@ -50,7 +50,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Income"
+                    android:text="Expense"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/black" />
             </RelativeLayout>
@@ -74,10 +74,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_id_income"
+        android:id="@+id/recycler_expense"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

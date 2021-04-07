@@ -59,5 +59,10 @@ public class Data {
     public Data(){
 
     }
+    public String togetdata(){
+        return   "Date : " + date + "\nType :" + type + "\nAmount : "+ amount;
+    }
+    
+
 
 }

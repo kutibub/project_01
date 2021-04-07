@@ -1,6 +1,5 @@
 package com.example.project_01;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,8 +29,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,6 +55,9 @@ public class Income_class extends Activity implements NavigationView.OnNavigatio
     private FirebaseAuth IAuth;
     private DatabaseReference IIncomedb;
     private  DatabaseReference IExpensedb;
+
+    //Total
+    TextView total_income,total_expense,total_amount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +75,7 @@ public class Income_class extends Activity implements NavigationView.OnNavigatio
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(getApplicationContext(),Income_detail_class.class);
+                intent = new Intent(getApplicationContext(), Income_detail_class_real.class);
                 startActivity(intent);
                 Income_class.this.finish();
             }
@@ -79,7 +84,7 @@ public class Income_class extends Activity implements NavigationView.OnNavigatio
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                intent = new Intent(getApplicationContext(),Income_detail_class.class);
+                intent = new Intent(getApplicationContext(),Expense_detail_class_real.class);
                 startActivity(intent);
                 Income_class.this.finish();
             }
@@ -103,6 +108,11 @@ public class Income_class extends Activity implements NavigationView.OnNavigatio
 
         IIncomedb= FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
         IExpensedb= FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+
+        //total txt
+        total_income = findViewById(R.id.total_income);
+        total_expense = findViewById(R.id.total_expense);
+        total_amount =findViewById(R.id.total_amount);
 
 
 
@@ -150,10 +160,49 @@ public class Income_class extends Activity implements NavigationView.OnNavigatio
                         startActivity(new Intent(getApplicationContext(), Income_class.class));
                         overridePendingTransition(0, 0);
                         return true;
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), User_class.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                 }
                 return false;
             }
         });
+        //calculate total
+        IIncomedb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int total_in = 0;
+                for (DataSnapshot mysnap:snapshot.getChildren()){
+                    Data data = mysnap.getValue(Data.class);
+                    total_in += total_in+data.getAmount();
+                    String sttotal_in = String.valueOf(total_in);
+                    total_income.setText(sttotal_in);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        IExpensedb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int total_ex = 0;
+                for (DataSnapshot mysnap:snapshot.getChildren()){
+                    Data data = mysnap.getValue(Data.class);
+                    total_ex += total_ex+data.getAmount();
+                    String sttotal_ex = String.valueOf(total_ex);
+                    total_expense.setText(sttotal_ex);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override

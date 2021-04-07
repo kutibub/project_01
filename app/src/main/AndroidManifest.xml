@@ -20,7 +20,9 @@
         <activity android:name=".Register_class"></activity>
         <activity android:name=".Income_class"></activity>
         <activity android:name=".Goal_class"></activity>
-        <activity android:name=".Income_detail_class"></activity>
+        <activity android:name=".Income_detail_class_real"></activity>
+        <activity android:name=".Expense_detail_class_real"></activity>
+        <activity android:name=".User_class" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

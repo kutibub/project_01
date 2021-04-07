@@ -134,14 +134,6 @@
             android:text="calculate"
             android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/btnnext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#ff893b"
-            android:text="Next"
-            android:textColor="@color/black" />
-
     </LinearLayout>
 
     <LinearLayout

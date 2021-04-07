@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Goal_class extends Activity  {
-    Button gbtn_cal,btn_next;
+    Button gbtn_cal;
     Dialog dialog;
     EditText editach;
     EditText editmont;
@@ -48,19 +48,6 @@ public class Goal_class extends Activity  {
             }
         });
         dialog= new Dialog(this);
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String mon_string = editmont.getText().toString().trim();
-                String ach_string = editach.getText().toString().trim();
-                if (TextUtils.isEmpty(ach_string) && TextUtils.isEmpty(mon_string)){
-                    Toast.makeText(getApplicationContext(),"please enter data !",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    openconfirmdialog();
-                }
-            }
-        });
         BottomNavigationView BotNav = findViewById(R.id.btn_nav);
         BotNav.setSelectedItemId(R.id.goal);
         BotNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,6 +62,10 @@ public class Goal_class extends Activity  {
                         startActivity(new Intent(getApplicationContext(), Income_class.class));
                         overridePendingTransition(0, 0);
                         return true;
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), User_class.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                 }
                 return false;
             }
@@ -85,7 +76,6 @@ public class Goal_class extends Activity  {
     public void init() {
 
         gbtn_cal = findViewById(R.id.gbtn_cal);
-        btn_next = findViewById(R.id.btnnext);
         editmont = findViewById(R.id.gedit_month);
         editach = findViewById(R.id.gedit_ach);
         txtcal = findViewById(R.id.text_cal);
